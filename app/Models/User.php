@@ -47,6 +47,15 @@ class User extends Authenticatable
         ];
     }
 
+    // Relation
+    public function isRelated(User $user){
+        if (auth()->user()->id === $user->id) {
+            return true;
+        }
+
+        return $this->from()->where('to_id', $user->id)->exists() || $this->to()->where('from_id', $user->id)->exists();
+    }
+
     public function posts() {
         return $this->hasMany(Post::class);
     }
@@ -60,6 +69,10 @@ class User extends Authenticatable
     }
 
     // Friends
+    public function friends(){
+        return $this->friendsFrom->merge($this->friendsTo);
+    }
+
     public function friendsFrom(){
         return $this->from()->wherePivot('accepted', true);
     }
