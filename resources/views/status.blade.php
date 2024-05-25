@@ -5,7 +5,11 @@
             <x-card class="mb-4">
                 <div class="flex justify-between">
                     {{ $user->name}}
-                    <x-submit-button>Confirm</x-submit-button>
+                    <form action="{{ route('friends.update', $user) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <x-submit-button>Confirm</x-submit-button>
+                    </form>
                 </div>
             </x-card>
         @endforeach
