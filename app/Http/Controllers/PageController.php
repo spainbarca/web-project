@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -23,5 +24,10 @@ class PageController extends Controller
             $posts = Post::latest()->get();
         }
         return view('dashboard', compact('posts'));
+    }
+
+    public function profile(User $user){
+        $posts = $user->posts()->latest()->get();
+        return view('profile', compact('user', 'posts'));
     }
 }
